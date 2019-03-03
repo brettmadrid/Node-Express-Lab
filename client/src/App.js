@@ -1,25 +1,19 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from 'axios';
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Cards from './Cards';
 import "./App.css";
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      posts: []
-    };
-  }
+function App() {
+  const [posts, setPosts] = useState([]);
 
-  componentDidMount() {
+  useEffect(() => {
     Axios.get("http://localhost:9090/api/posts")
-      .then(response => this.setState({ posts: response.data }))
+      .then(response => setPosts( response.data ))
       .catch(err => console.log(err));
-  }
+  });
 
-  render() {
     return (
       <div className="App">
         <Paper className="paper" elevation={1}>
@@ -30,10 +24,9 @@ class App extends Component {
             about a bunch of Tolkien quotes below!
           </Typography>
         </Paper>
-        <Cards posts={this.state.posts}/>
+        <Cards posts={posts}/>
       </div>
     );
-  }
 }
 
 export default App;
