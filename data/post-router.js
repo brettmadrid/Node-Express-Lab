@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const db = require('./db.js');
 
@@ -6,6 +7,7 @@ const router = express.Router();
 const parser = express.json();
 
 router.use(parser);
+router.use(cors());
 
 router.get('/', async (req, res) => {
   try {
